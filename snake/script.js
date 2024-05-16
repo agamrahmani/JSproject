@@ -1,6 +1,6 @@
 const board = document.querySelector('#board');
-const row = window.screen.width = 640 ? 40 : 20;
-const column = 40;
+const row = window.screen.width < 640 ? 20 : 40;
+const column = window.screen.width < 640 ? 20 : 40;
 const snake = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
 const divs = [];
 let direction = 'left';
@@ -105,7 +105,7 @@ function move(dir) {
         }
         localStorage.setItem("record", maxScore);
         document.querySelector("#record span").innerText = record;
-        sound("./Pebble.ogg");
+        sound("./snake_Pebble.ogg");
         createApple();
     } else {
         snake.pop();
@@ -162,7 +162,7 @@ function autoMove() {
 function gameOver() {
     isGameOver = true;
     clearInterval(interval);
-    sound("./snake_Pebble.ogg");;
+    sound("./snake_Country_Blues.ogg");;
     setTimeout(() => alert("המשחק נגמר"), 0);
 
 
