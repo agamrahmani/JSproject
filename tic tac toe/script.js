@@ -1,14 +1,14 @@
 const divs = document.querySelectorAll("#board>div");
 let isX = true;
 let isGameOver = false;
+let scoreX = 0;
+let scoreO = 0;
 
-const scores = {
-    x: localStorage.x ? Number(localStorage.x) : 0,
-    o: localStorage.o ? Number(localStorage.o) : 0,
-};
+scoreX = localStorage.getItem("scoreX");
+scoreO = localStorage.getItem("scoreO");
 
-document.querySelector("#x_score").innerText = scores.x;
-document.querySelector("#o_score").innerText = scores.o;
+document.querySelector("#x_score").innerText = scoreX;
+document.querySelector("#o_score").innerText = scoreO;
 
 // לולאה העוברת על כל המשבצות
 divs.forEach(div => {
@@ -72,14 +72,16 @@ function checkWinner() {
     for (const op of options) {
         // בודק את המיקומים של כל מערך
         if (op.every(x => divs[x].innerText === 'X')) {
-            scores.x++;
+            scoreX++;
             winner(op, 'X');
-            document.querySelector("#x_score").innerText = scores.x;
+            scoreX = localStorage.getItem("scoreX");
+            document.querySelector("#x_score").innerText = scoreX;
             break;
         } else if (op.every(x => divs[x].innerText === 'O')) {
-            scores.o++;
+            scoreO++
             winner(op, 'O');
-            document.querySelector("#o_score").innerText = scores.o;
+            scoreO = localStorage.getItem("scoreO");
+            document.querySelector("#o_score").innerText = scoreO;
             break;
         }
     }
@@ -97,8 +99,8 @@ function winner(op, win) {
 
     isGameOver = true;
 
-    localStorage.x = scores.x;
-    localStorage.o = scores.o;
+    localStorage.setItem("scoreX", scoreX);
+    localStorage.setItem("scoreO", scoreO);
 
     // כשיש ניצחון, מאפשרים לשחקן המנצח להתחיל
     isX = !isX;
@@ -115,5 +117,10 @@ function newGame() {
 }
 
 function reset() {
+    localStorage.setItem("scoreX", 0);
+    localStorage.setItem("scoreO", 0);
+
+    document.querySelector("#o_score").innerText = 0;
+    document.querySelector("#x_score").innerText = 0;
 
 }
