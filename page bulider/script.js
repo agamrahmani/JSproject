@@ -111,4 +111,8 @@ function restorePage() {
 
 page.addEventListener('input', savePage);
 
-function deletepage() { }
+function deletepage() {
+    localStorage.removeItem('style');
+    localStorage.removeItem('page');
+    restorePage();
+}
