@@ -115,4 +115,5 @@ function newGame() {
 }
 
 function reset() {
+
 }

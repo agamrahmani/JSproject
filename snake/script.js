@@ -10,6 +10,7 @@ let isGameOver = false;
 let score = 0;
 let record;
 let maxScore = 0;
+let stop = false;
 
 // לא צריך לקרוא למשתנים בתוך העעיגול כי זה מתוך הגוואה סקריפט ולא מבחוץ
 function createBoard() {
@@ -43,6 +44,10 @@ function color() {
 
 function move(dir) {
     if (isGameOver) {
+        return;
+    }
+
+    if (stop) {
         return;
     }
 
@@ -176,6 +181,7 @@ function sound(fileName) {
 }
 
 function newGame() {
+    stop = false;
     snake.splice(0, snake.length);
     snake.push(9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
     isGameOver = false;
@@ -189,9 +195,10 @@ function newGame() {
 
 function stopGame() {
     clearInterval(interval);
-    // לראות אם יש דרך לעצור את המקשים במקלדת
+    stop = true;
 }
 
 function continuGame() {
     autoMove();
+    stop = false;
 }
