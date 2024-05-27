@@ -17,7 +17,7 @@ let newArray = [];
 let cards;
 let cardsArray = [];
 
-let numberClick = 0;
+let numberClick = 1;
 let count = 0;
 let compare = [];
 let same = 0;
@@ -56,23 +56,26 @@ function clearBoard() {
     same = 0;
 }
 
-function rotate() {
+function rotate(elem) {
     numberClick += 1;
-    if (numberClick == 2) {
-
-    }
-    this.classList.add('rotate');
+    elem.classList.add('rotate');
     setTimeout(() => {
-        this.querySelector('.imageElem').style.display = "block";
+        elem.querySelector('.imageElem').style.display = "block";
     }, 250);
 
     setTimeout(() => {
-        this.classList.remove('rotate');
-        this.querySelector('.imageElem').style.display = "none";
+        elem.classList.remove('rotate');
+        elem.querySelector('.imageElem').style.display = "none";
     }, 1000);
 
-    this.querySelector('.imageElem');
-    compare.push(this.querySelector('.imageElem'));
+    setTimeout(() => {
+        if (numberClick = 3) {
+            numberClick = 1;
+        }
+    }, 2000);
+
+    elem.querySelector('.imageElem');
+    compare.push(elem.querySelector('.imageElem'));
     if (count == 1) {
         if (compare[0].src == compare[1].src) {
             same += 1;
@@ -119,21 +122,23 @@ function newGame() {
     if (isFirstGame) {
         newArray = shuffleArray(imagesArray);
         divs = createBoard(newArray);
-        cards = document.querySelectorAll('.card');
-        cardsArray = Array.from(cards);
-        cardsArray.forEach(card => {
-            card.addEventListener('click', rotate);
-        });
     }
     else {
         clearBoard();
         newArray = shuffleArray(imagesArray);
         divs = createBoard(newArray);
-        cards = document.querySelectorAll('.card');
-        cardsArray = Array.from(cards);
-        cardsArray.forEach(card => {
-            card.addEventListener('click', rotate);
-        });
     }
+
+    numberClick = 1;
+    cards = document.querySelectorAll('.card');
+    cardsArray = Array.from(cards);
+    cardsArray.forEach(card => {
+        card.addEventListener('click', (e) => {
+            if (numberClick < 3) {
+                rotate(e.target);
+            }
+        });
+    });
+
 
 }
