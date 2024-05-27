@@ -12,15 +12,15 @@ const imagesArray = [
     "./images/lion.png",
     "./images/turtle.png"];
 
-let divs = [];
-let newArray = [];
-let cards;
-let cardsArray = [];
+let newArray = []; // מערך לאחר ערבוב המערך המקורי
+let divs = []; // מערך שמקבלים מיצירת הלוח
+let cards; // משתתנה מסוג nodelist שמכיל את כל הקלפים
+let cardsArray = []; //מערך של קלפים
 
-let numberClick = 1;
-let count = 0;
-let compare = [];
-let same = 0;
+let numberClick = 1; //משתנה שאומר לי על כמה קלפים לחץ השחקן לטובת אי לחיצה כל קלף אחר בזמן שנלחצו 2 קלפים
+let count = 0; // בודק אם נלחצו כבר 2 קלפים לטובת השוואה
+let compare = []; // מערך להשוואה בין 2 הקלפים
+let same = 0; // משתנה שמונה את כמות הפעמים שהצילחו לנחש - 6 מקסימלי ונגמר המשחק
 let isFirstGame = true;
 
 
