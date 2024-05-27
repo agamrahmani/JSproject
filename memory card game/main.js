@@ -12,16 +12,17 @@ const imagesArray = [
     "./images/lion.png",
     "./images/turtle.png"];
 
+let divs = [];
 let newArray = [];
-
 let cards;
 let cardsArray = [];
 
+let numberClick = 0;
 let count = 0;
 let compare = [];
 let same = 0;
 let isFirstGame = true;
-let divs = [];
+
 
 
 function createBoard(imagesArray) {
@@ -55,17 +56,12 @@ function clearBoard() {
     same = 0;
 }
 
-
-// cards = document.querySelectorAll('.card');
-// cardsArray = Array.from(cards);
-// cardsArray.forEach(card => {
-//     card.addEventListener('click', rotate);
-// });
-
-
 function rotate() {
-    this.classList.add('rotate');
+    numberClick += 1;
+    if (numberClick == 2) {
 
+    }
+    this.classList.add('rotate');
     setTimeout(() => {
         this.querySelector('.imageElem').style.display = "block";
     }, 250);
@@ -113,20 +109,16 @@ function gameover() {
     setTimeout(() => {
         let msg = document.querySelector('.message');
         msg.remove();
-        console.log('hi');
         isFirstGame = false;
         newGame();
     }, 2000);
 }
 
-// function firstGame() {
-//     let divs = createBoard(newArray);
-//     return divs;
-// }
 
 function newGame() {
     if (isFirstGame) {
-        divs = createBoard(imagesArray);
+        newArray = shuffleArray(imagesArray);
+        divs = createBoard(newArray);
         cards = document.querySelectorAll('.card');
         cardsArray = Array.from(cards);
         cardsArray.forEach(card => {
