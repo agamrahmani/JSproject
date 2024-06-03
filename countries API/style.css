@@ -1,0 +1,33 @@
+.card-img-top {
+    height: 35%;
+    object-fit: contain;
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fa:hover {
+    cursor: pointer;
+}
+
+.container {
+    margin: 3rem;
+}
+
+.card {
+    height: 70vh;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.divcard:hover {
+    background-color: rgba(202, 189, 189, 0.771);
+}
+
+.color {
+    background-color: rgb(21, 17, 17);
+}

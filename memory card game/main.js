@@ -68,12 +68,6 @@ function rotate(elem) {
         elem.querySelector('.imageElem').style.display = "none";
     }, 1000);
 
-    setTimeout(() => {
-        if (numberClick = 3) {
-            numberClick = 1;
-        }
-    }, 2000);
-
     elem.querySelector('.imageElem');
     compare.push(elem.querySelector('.imageElem'));
     if (count == 1) {
@@ -93,6 +87,13 @@ function rotate(elem) {
         if (same == 6) {
             gameover();
         }
+
+        setTimeout(() => {
+            if (numberClick = 3) {
+                console.log('hi');
+                numberClick = 1;
+            }
+        }, 1900);
     }
     else {
         count += 1;
@@ -122,14 +123,15 @@ function newGame() {
     if (isFirstGame) {
         newArray = shuffleArray(imagesArray);
         divs = createBoard(newArray);
+        numberClick = 1;
     }
     else {
         clearBoard();
         newArray = shuffleArray(imagesArray);
         divs = createBoard(newArray);
+        numberClick = 1;
     }
 
-    numberClick = 1;
     cards = document.querySelectorAll('.card');
     cardsArray = Array.from(cards);
     cardsArray.forEach(card => {
