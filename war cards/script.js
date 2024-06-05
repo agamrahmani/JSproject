@@ -26,15 +26,24 @@ const text = document.querySelector('.textWin');
 let playerDeck;
 let computerDeck;
 let inRound;
+let isFirstGame = true;
 let stop;
-let winPlayerDeck;
-let winComputerDeck;
+let winPlayerDeck = [];
+let winComputerDeck = [];
+let playerCard;
+let computerCard;
+
+// if (isFirstGame) {
+//     firstGame;
+// }
+
+firstGame();
 
 document.addEventListener('click', () => {
-    if (stop) {
-        startGame();
-        return;
-    }
+    // if (stop) {
+    //     startGame();
+    //     return;
+    // }
     if (inRound) {
         cleanBeforeRound();
     }
@@ -43,17 +52,15 @@ document.addEventListener('click', () => {
     }
 });
 
-startGame();
-
-function startGame() {
+function firstGame() {
     const deck = new Deck();
     deck.shuffle();
 
     const deckMidpoint = Math.ceil(deck.numberOfCards / 2);
     playerDeck = new Deck(deck.cards.slice(0, deckMidpoint));
     computerDeck = new Deck(deck.cards.slice(deckMidpoint, deck.numberOfCards));
-    inRound = false;
     stop = false;
+    isFirstGame = false;
 
     cleanBeforeRound();
 }
@@ -74,13 +81,13 @@ function updateDeckCount() {
 
 function flipCard() {
     inRound = true;
-    const playerCard = playerDeck.pop();
-    const computerCard = computerDeck.pop();
+    playerCard = playerDeck.pop();
+    computerCard = computerDeck.pop();
 
     playerCardSlot.appendChild(playerCard.getHTML());
     computerCardSlot.appendChild(computerCard.getHTML());
 
-    updateDeckCount()
+    updateDeckCount();
 
     if (isRoundWinner(playerCard, computerCard)) {
         text.innerText = "אתה המנצח";
@@ -96,12 +103,33 @@ function flipCard() {
         winComputerDeck.push(computerCard);
     }
 
-    if (isGameOver(playerDeck)) {
-        text.innerText = "הפסדת, המשחק נגמר!";
-        stop = true;
-    } else if (isGameOver(computerDeck)) {
-        text.innerText = "נצחת, המשחק נגמר!";
-        stop = true;
+    if (isRoundGameOver(playerDeck)) {
+        if (winPlayerDeck.length == 0) {
+            alert("אתה המפסיד של המשחק!");
+            gameOver();
+        }
+    } else if (isRoundGameOver(computerDeck)) {
+        if (winComputerDeck.length == 0) {
+            alert("אתה המנצח של המשחק!");
+            gameOver();
+        }
+    }
+
+    if (isRoundGameOver(playerDeck) || isRoundGameOver(computerDeck)) {
+        // לולאה שמכניסה מהמערך ניצחונות למערך הרגיל של הקלפים
+        for (let i = 0; i < winPlayerDeck.length; i++) {
+            playerDeck.push(winPlayerDeck[i]);
+        }
+        winPlayerDeck = cleanWinArray(winPlayerDeck);
+        // לולאה שמרוקנת את המערך ניצחונות
+        // while (winPlayerDeck.length > 0) {
+        //     winPlayerDeck.pop();
+        // }
+        for (let i = 0; i < winComputerDeck.length; i++) {
+            computerDeck.push(winComputerDeck[i]);
+        }
+        winComputerDeck = cleanWinArray(winComputerDeck);
+        startGame();
     }
 }
 
@@ -109,6 +137,29 @@ function isRoundWinner(cardOne, cardTwo) {
     return CARD_VALUE_MAP[cardOne.value] > CARD_VALUE_MAP[cardTwo.value];
 }
 
-function isGameOver(deck) {
+function isRoundGameOver(deck) {
     return deck.numberOfCards === 0;
+}
+
+function cleanWinArray(winArray) {
+    while (winArray.length > 0) {
+        winArray.pop();
+    }
+    return winArray;
+}
+
+function startGame() {
+    //     console.log(playerDeck);
+    //     playerDeck.shuffle();
+    //     console.log(playerDeck);
+    //     computerDeck.shuffle();
+    //     inRound = false;
+    //     isFirstGame = false;
+
+    //     cleanBeforeRound();
+}
+
+function gameOver() {
+    isFirstGame = true;
+    firstGame();
 }

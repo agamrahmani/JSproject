@@ -131,19 +131,6 @@ window.addEventListener("keydown", ev => {
     }
 });
 
-// window.addEventListener("keydown", ev => {
-//     ev.preventDefault();
-
-//     if (ev.key === "ArrowUp") {
-//         move("up");
-//     } else if (ev.key === "ArrowRight") {
-//         move("right");
-//     } else if (ev.key === "ArrowDown") {
-//         move("down");
-//     } else if (ev.key === "ArrowLeft") {
-//         move("left");
-//     }
-// });
 
 function createApple() {
     random = Math.round(Math.random() * (column * row)); // הפקודה math.floor הופכת את המספר לשלם
@@ -173,7 +160,6 @@ function gameOver() {
 
 }
 
-// לא עובד לשאול את אלישיב
 function sound(fileName) {
     const audio = document.createElement('audio');
     audio.src = fileName;
