@@ -21,6 +21,8 @@ const playerCardSlot = document.querySelector('.player-card-slot');
 const computerDeckElement = document.querySelector('.computer-deck');
 const playerDeckElement = document.querySelector('.player-deck');
 const text = document.querySelector('.textWin');
+const computerDeckElementWin = document.querySelector('.computer-deck-win');
+const playerDeckElementWin = document.querySelector('.player-deck-win');
 
 
 let playerDeck;
@@ -32,6 +34,8 @@ let winPlayerDeck = [];
 let winComputerDeck = [];
 let playerCard;
 let computerCard;
+let count;
+let sameArray = [];
 
 // if (isFirstGame) {
 //     firstGame;
@@ -77,6 +81,8 @@ function cleanBeforeRound() {
 function updateDeckCount() {
     computerDeckElement.innerText = computerDeck.numberOfCards;
     playerDeckElement.innerText = playerDeck.numberOfCards;
+    computerDeckElementWin.innerText = winComputerDeck.length;
+    playerDeckElementWin.innerText = winPlayerDeck.length;
 }
 
 function flipCard() {
@@ -88,7 +94,6 @@ function flipCard() {
     computerCardSlot.appendChild(computerCard.getHTML());
 
     updateDeckCount();
-
     if (isRoundWinner(playerCard, computerCard)) {
         text.innerText = "אתה המנצח";
         winPlayerDeck.push(playerCard);
@@ -99,8 +104,17 @@ function flipCard() {
         winComputerDeck.push(computerCard);
     } else {
         text.innerText = "הקלפים זהים";
-        winPlayerDeck.push(playerCard);
-        winComputerDeck.push(computerCard);
+        count = 1;
+        sameArray.push(playerCard);
+        sameArray.push(computerCard);
+        if (isRoundGameOver(playerDeck) || isRoundGameOver(computerDeck)) {
+            winPlayerDeck.push(playerCard);
+            winComputerDeck.push(computerCard);
+            // כאן צריכה לטפל באם אין מספיק קלפים
+        }
+        else {
+            setTimeout(sameCards, 2000);
+        }
     }
 
     if (isRoundGameOver(playerDeck)) {
@@ -121,10 +135,6 @@ function flipCard() {
             playerDeck.push(winPlayerDeck[i]);
         }
         winPlayerDeck = cleanWinArray(winPlayerDeck);
-        // לולאה שמרוקנת את המערך ניצחונות
-        // while (winPlayerDeck.length > 0) {
-        //     winPlayerDeck.pop();
-        // }
         for (let i = 0; i < winComputerDeck.length; i++) {
             computerDeck.push(winComputerDeck[i]);
         }
@@ -149,17 +159,70 @@ function cleanWinArray(winArray) {
 }
 
 function startGame() {
-    //     console.log(playerDeck);
-    //     playerDeck.shuffle();
-    //     console.log(playerDeck);
-    //     computerDeck.shuffle();
-    //     inRound = false;
-    //     isFirstGame = false;
+    playerDeck.shuffle();
+    computerDeck.shuffle();
+    inRound = false;
+    isFirstGame = false;
 
-    //     cleanBeforeRound();
+    cleanBeforeRound();
 }
 
 function gameOver() {
     isFirstGame = true;
     firstGame();
+}
+
+function sameCards() {
+    for (let i = 0; i <= 3; i++) {
+        const delay = 2000;
+        setTimeout(() => {
+            playerCardSlot.innerHTML = '';
+            computerCardSlot.innerHTML = '';
+            playerCard = playerDeck.pop();
+            computerCard = computerDeck.pop();
+
+            updateDeckCount();
+            if (i == 3) {
+                playerCardSlot.appendChild(playerCard.getHTML());
+                computerCardSlot.appendChild(computerCard.getHTML());
+                sameArray.push(playerCard);
+                sameArray.push(computerCard);
+                if (isRoundWinner(playerCard, computerCard)) {
+                    text.innerText = "אתה המנצח";
+                    for (let i = 0; i < sameArray.length; i++) {
+                        winPlayerDeck.push(sameArray[i]);
+                    }
+                    sameArray = cleanWinArray(sameArray);
+                } else if (isRoundWinner(computerCard, playerCard)) {
+                    text.innerText = "אתה המפסיד";
+                    for (let i = 0; i < sameArray.length; i++) {
+                        winComputerDeck.push(sameArray[i]);
+                    }
+                    sameArray = cleanWinArray(sameArray);
+                }
+                else {
+                    text.innerText = "הקלפים זהים";
+                    sameArray.push(playerCard);
+                    sameArray.push(computerCard);
+                    count = 1;
+                    if (isRoundGameOver(playerDeck) || isRoundGameOver(computerDeck)) {
+                        winPlayerDeck.push(playerCard);
+                        winComputerDeck.push(computerCard);
+                        // כאן צריכה לטפל באם אין מספיק קלפים
+                    }
+                    else {
+                        setTimeout(sameCards, 2000);
+                    }
+                }
+
+            }
+            else {
+                count += 1;
+                sameArray.push(playerCard);
+                sameArray.push(computerCard);
+                playerCardSlot.appendChild(playerCard.getHTMLToSame(count));
+                computerCardSlot.appendChild(computerCard.getHTMLToSame(count));
+            }
+        }, i * delay);
+    }
 }

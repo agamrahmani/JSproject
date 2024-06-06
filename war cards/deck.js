@@ -30,7 +30,7 @@ export default class Deck {
         this.cards.push(card);
     }
     shuffle() {
-        for (let i = this.numberOfCards - 1; i > 0; i--) {
+        for (let i = this.cards.length - 1; i > 0; i--) {
             const newIndex = Math.floor(Math.random() * (i + 1));
             const oldvalue = this.cards[newIndex];
             this.cards[newIndex] = this.cards[i];
@@ -55,7 +55,11 @@ class Card {
         cardDiv.dataset.value = `${this.value} ${this.suit}`;
         return cardDiv;
     }
-
+    getHTMLToSame(count) {
+        const cardDiv = document.createElement('div');
+        cardDiv.classList.add("sameCard", `smaeCard${count}`);
+        return cardDiv;
+    }
 }
 
 
