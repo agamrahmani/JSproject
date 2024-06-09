@@ -36,11 +36,11 @@ let playerCard;
 let computerCard;
 let count;
 let sameArray = [];
+let numOfCardsLessThan4;
 
-
-// if (isFirstGame) {
-//     firstGame;
-// }
+if (isFirstGame) {
+    firstGame;
+}
 
 firstGame();
 
@@ -59,37 +59,11 @@ document.addEventListener('click', () => {
 
 function firstGame() {
     const deck = new Deck();
-    // deck.shuffle();
+    deck.shuffle();
 
     const deckMidpoint = Math.ceil(deck.numberOfCards / 2);
     playerDeck = new Deck(deck.cards.slice(0, deckMidpoint));
     computerDeck = new Deck(deck.cards.slice(deckMidpoint, deck.numberOfCards));
-    computerDeck.cards[0] = computerDeck.cards[24];
-    computerDeck.cards[1] = computerDeck.cards[24];
-    computerDeck.cards[2] = computerDeck.cards[24];
-    computerDeck.cards[3] = computerDeck.cards[24];
-    computerDeck.cards[4] = computerDeck.cards[24];
-    computerDeck.cards[5] = computerDeck.cards[24];
-    computerDeck.cards[6] = computerDeck.cards[24];
-    computerDeck.cards[7] = computerDeck.cards[24];
-    computerDeck.cards[8] = computerDeck.cards[24];
-    computerDeck.cards[9] = computerDeck.cards[24];
-    computerDeck.cards[10] = computerDeck.cards[24];
-    computerDeck.cards[11] = computerDeck.cards[24];
-    computerDeck.cards[12] = computerDeck.cards[24];
-    computerDeck.cards[13] = computerDeck.cards[24];
-    computerDeck.cards[14] = computerDeck.cards[24];
-    computerDeck.cards[15] = computerDeck.cards[24];
-    computerDeck.cards[16] = computerDeck.cards[24];
-    computerDeck.cards[17] = computerDeck.cards[24];
-    computerDeck.cards[18] = computerDeck.cards[24];
-    computerDeck.cards[19] = computerDeck.cards[24];
-    computerDeck.cards[20] = computerDeck.cards[24];
-    computerDeck.cards[22] = computerDeck.cards[24];
-    computerDeck.cards[25] = computerDeck.cards[24];
-    console.log(computerDeck.cards[26]);
-    console.log(computerDeck);
-
     stop = false;
     isFirstGame = false;
 
@@ -137,6 +111,8 @@ function flipCard() {
         winComputerDeck = cleanWinArray(winComputerDeck);
         startGame();
     }
+
+
     inRound = true;
     playerCard = playerDeck.pop();
     computerCard = computerDeck.pop();
@@ -158,15 +134,23 @@ function flipCard() {
         count = 1;
         sameArray.push(playerCard);
         sameArray.push(computerCard);
-        if (isRoundGameOver(playerDeck) || isRoundGameOver(computerDeck)) {
-            winPlayerDeck.push(playerCard);
-            winComputerDeck.push(computerCard);
-            // כאן צריכה לטפל באם אין מספיק קלפים
+        if (playerDeck.numberOfCards <= 3 || computerDeck.numberOfCards <= 3) {
+            if (winPlayerDeck.length != 0) {
+                for (let i = 0; i < winPlayerDeck.length; i++) {
+                    playerDeck.push(winPlayerDeck[i]);
+                }
+                winPlayerDeck = cleanWinArray(winPlayerDeck);
+            }
+            if (winComputerDeck.length != 0) {
+                for (let i = 0; i < winComputerDeck.length; i++) {
+                    computerDeck.push(winComputerDeck[i]);
+                }
+                winComputerDeck = cleanWinArray(winComputerDeck);
+            }
+            setTimeout(sameCards, 2000);
         }
         else {
             setTimeout(sameCards, 2000);
-            console.log('hiiiii');
-
         }
     }
 
@@ -223,20 +207,30 @@ function startGame() {
 
 function gameOver() {
     isFirstGame = true;
-    firstGame();
+    //firstGame();
 }
 
 function sameCards() {
-    for (let i = 0; i <= 3; i++) {
+    if (playerDeck.numberOfCards > computerDeck.numberOfCards) {
+        numOfCardsLessThan4 = computerDeck.numberOfCards;
+    }
+    else {
+        numOfCardsLessThan4 = playerDeck.numberOfCards;
+    }
+    if (numOfCardsLessThan4 >= 4) {
+        numOfCardsLessThan4 = 4;
+    }
+    for (let i = 0; i <= numOfCardsLessThan4 - 1; i++) {
         const delay = 2000;
         setTimeout(() => {
             playerCardSlot.innerHTML = '';
             computerCardSlot.innerHTML = '';
+            text.innerText = '';
             playerCard = playerDeck.pop();
             computerCard = computerDeck.pop();
 
             updateDeckCount();
-            if (i == 3) {
+            if (i == (numOfCardsLessThan4 - 1)) {
                 playerCardSlot.appendChild(playerCard.getHTML());
                 computerCardSlot.appendChild(computerCard.getHTML());
                 sameArray.push(playerCard);
@@ -259,15 +253,51 @@ function sameCards() {
                     sameArray.push(playerCard);
                     sameArray.push(computerCard);
                     count = 1;
-                    if (isRoundGameOver(playerDeck) || isRoundGameOver(computerDeck)) {
-                        winPlayerDeck.push(playerCard);
-                        winComputerDeck.push(computerCard);
-                        // כאן צריכה לטפל באם אין מספיק קלפים
+                    setTimeout(() => {
+                        if (isRoundGameOver(playerDeck)) {
+                            if (winPlayerDeck.length == 0) {
+                                alert("אתה המפסיד של המשחק!");
+                                gameOver();
+                            }
+                        } else if (isRoundGameOver(computerDeck)) {
+                            if (winComputerDeck.length == 0) {
+                                alert("אתה המנצח של המשחק!");
+                                gameOver();
+                            }
+                        }
+                    }, 3000);
+                    if (playerDeck.numberOfCards <= 3 || computerDeck.numberOfCards <= 3) {
+                        if (winPlayerDeck.length != 0) {
+                            for (let i = 0; i < winPlayerDeck.length; i++) {
+                                playerDeck.push(winPlayerDeck[i]);
+                            }
+                            winPlayerDeck = cleanWinArray(winPlayerDeck);
+                        }
+                        if (winComputerDeck.length != 0) {
+                            for (let i = 0; i < winComputerDeck.length; i++) {
+                                computerDeck.push(winComputerDeck[i]);
+                            }
+                            winComputerDeck = cleanWinArray(winComputerDeck);
+                        }
+                        setTimeout(sameCards, 2000);
                     }
                     else {
                         setTimeout(sameCards, 2000);
                     }
                 }
+                setTimeout(() => {
+                    if (isRoundGameOver(playerDeck)) {
+                        if (winPlayerDeck.length == 0) {
+                            alert("אתה המפסיד של המשחק!");
+                            gameOver();
+                        }
+                    } else if (isRoundGameOver(computerDeck)) {
+                        if (winComputerDeck.length == 0) {
+                            alert("אתה המנצח של המשחק!");
+                            gameOver();
+                        }
+                    }
+                }, 3000);
 
             }
             else {
@@ -280,3 +310,4 @@ function sameCards() {
         }, i * delay);
     }
 }
+

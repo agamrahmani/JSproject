@@ -7,7 +7,6 @@
 body {
     margin: 0;
     cursor: pointer;
-    /*סימן של עכבר שאפשר ללחוץ*/
 }
 
 h1 {
@@ -33,7 +32,6 @@ h1 {
     font-size: 3em;
     border-radius: 0.5em;
     color: white;
-    /*the text cant change*/
     user-select: none;
 }
 
