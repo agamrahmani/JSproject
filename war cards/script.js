@@ -57,6 +57,11 @@ document.addEventListener('click', () => {
     }
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const button = document.getElementById('btn-new-game');
+    button.addEventListener('click', gameOver);
+})
+
 function firstGame() {
     const deck = new Deck();
     deck.shuffle();
@@ -207,7 +212,7 @@ function startGame() {
 
 function gameOver() {
     isFirstGame = true;
-    //firstGame();
+    location.reload();
 }
 
 function sameCards() {
