@@ -1,0 +1,26 @@
+.img {
+    height: 40%;
+}
+
+@font-face {
+    font-family: "Heebo-Regular";
+    src: url(./Heebo/static/Heebo-Regular.ttf);
+}
+
+.MG {
+    text-align: left;
+}
+
+.save {
+
+    text-align: right;
+}
+
+
+@media screen and (max-width: 1200px) {
+
+    .MG,
+    .save {
+        text-align: center;
+    }
+}

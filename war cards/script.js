@@ -37,6 +37,7 @@ let computerCard;
 let count;
 let sameArray = [];
 
+
 // if (isFirstGame) {
 //     firstGame;
 // }
@@ -58,11 +59,37 @@ document.addEventListener('click', () => {
 
 function firstGame() {
     const deck = new Deck();
-    deck.shuffle();
+    // deck.shuffle();
 
     const deckMidpoint = Math.ceil(deck.numberOfCards / 2);
     playerDeck = new Deck(deck.cards.slice(0, deckMidpoint));
     computerDeck = new Deck(deck.cards.slice(deckMidpoint, deck.numberOfCards));
+    computerDeck.cards[0] = computerDeck.cards[24];
+    computerDeck.cards[1] = computerDeck.cards[24];
+    computerDeck.cards[2] = computerDeck.cards[24];
+    computerDeck.cards[3] = computerDeck.cards[24];
+    computerDeck.cards[4] = computerDeck.cards[24];
+    computerDeck.cards[5] = computerDeck.cards[24];
+    computerDeck.cards[6] = computerDeck.cards[24];
+    computerDeck.cards[7] = computerDeck.cards[24];
+    computerDeck.cards[8] = computerDeck.cards[24];
+    computerDeck.cards[9] = computerDeck.cards[24];
+    computerDeck.cards[10] = computerDeck.cards[24];
+    computerDeck.cards[11] = computerDeck.cards[24];
+    computerDeck.cards[12] = computerDeck.cards[24];
+    computerDeck.cards[13] = computerDeck.cards[24];
+    computerDeck.cards[14] = computerDeck.cards[24];
+    computerDeck.cards[15] = computerDeck.cards[24];
+    computerDeck.cards[16] = computerDeck.cards[24];
+    computerDeck.cards[17] = computerDeck.cards[24];
+    computerDeck.cards[18] = computerDeck.cards[24];
+    computerDeck.cards[19] = computerDeck.cards[24];
+    computerDeck.cards[20] = computerDeck.cards[24];
+    computerDeck.cards[22] = computerDeck.cards[24];
+    computerDeck.cards[25] = computerDeck.cards[24];
+    console.log(computerDeck.cards[26]);
+    console.log(computerDeck);
+
     stop = false;
     isFirstGame = false;
 
@@ -86,6 +113,30 @@ function updateDeckCount() {
 }
 
 function flipCard() {
+    if (isRoundGameOver(playerDeck)) {
+        if (winPlayerDeck.length == 0) {
+            alert("אתה המפסיד של המשחק!");
+            gameOver();
+        }
+    } else if (isRoundGameOver(computerDeck)) {
+        if (winComputerDeck.length == 0) {
+            alert("אתה המנצח של המשחק!");
+            gameOver();
+        }
+    }
+
+    if (isRoundGameOver(playerDeck) || isRoundGameOver(computerDeck)) {
+        // לולאה שמכניסה מהמערך ניצחונות למערך הרגיל של הקלפים
+        for (let i = 0; i < winPlayerDeck.length; i++) {
+            playerDeck.push(winPlayerDeck[i]);
+        }
+        winPlayerDeck = cleanWinArray(winPlayerDeck);
+        for (let i = 0; i < winComputerDeck.length; i++) {
+            computerDeck.push(winComputerDeck[i]);
+        }
+        winComputerDeck = cleanWinArray(winComputerDeck);
+        startGame();
+    }
     inRound = true;
     playerCard = playerDeck.pop();
     computerCard = computerDeck.pop();
@@ -114,6 +165,8 @@ function flipCard() {
         }
         else {
             setTimeout(sameCards, 2000);
+            console.log('hiiiii');
+
         }
     }
 
@@ -141,6 +194,7 @@ function flipCard() {
         winComputerDeck = cleanWinArray(winComputerDeck);
         startGame();
     }
+
 }
 
 function isRoundWinner(cardOne, cardTwo) {
