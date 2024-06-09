@@ -1,6 +1,6 @@
 const board = document.querySelector('#board');
-const row = window.screen.width < 640 ? 20 : 40;
-const column = window.screen.width < 640 ? 20 : 40;
+const row = window.screen.width < 1280 ? 20 : 40;
+const column = window.screen.width < 1280 ? 20 : 40;
 const snake = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
 const divs = [];
 let direction = 'left';

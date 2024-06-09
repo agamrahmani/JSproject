@@ -100,8 +100,7 @@ img {
 }
 
 
-
-@media screen and (max-width:1024px) {
+@media screen and (max-width:1280px) {
     #container-center {
         margin: auto;
         display: block;
@@ -109,9 +108,14 @@ img {
 
     #container-responsiveKeys {
         display: grid;
-        grid-template-columns: repeat(3, 2fr);
-        grid-template-rows: repeat(3, 2fr);
-        gap: 15px;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    #container-responsiveKeys img {
+        width: 60px;
+        height: 60px;
     }
 
     img[alt="left"] {
