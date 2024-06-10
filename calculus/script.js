@@ -107,18 +107,20 @@ function check() {
     let newCell3 = newRow.insertCell();
     let newCell4 = newRow.insertCell();
     if (+(answer.value) == result) {
-        textToUser.innerText = "כל הכבוד! תשובה נכונה";
+        textToUser.innerText = "תשובה נכונה";
         textToUser.style.color = "green";
         grade += 5;
         newCell3.textContent = '';
+        newCell1.style.color = "green";
     } else {
         textToUser.innerText = "טעות";
         textToUser.style.color = "red";
         newCell3.textContent = answer.value;
+        newCell1.style.color = "red";
     }
     newCell1.textContent = exerciseToTable;
     newCell2.textContent = result;
-    newCell4.textContent = count;
+    newCell4.textContent = grade;
 
     setTimeout(again, 1000);
 }
