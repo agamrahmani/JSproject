@@ -4,13 +4,13 @@
     box-sizing: border-box;
 }
 
-body {
+/* body {
     background-image: url("./sunnyImg.jpg");
     background-repeat: no repeat;
     background-position: top left;
     background-size: cover;
     background-attachment: fixed;
-}
+} */
 
 h1 {
     text-align: center;
