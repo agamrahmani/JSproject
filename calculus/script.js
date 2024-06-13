@@ -2,6 +2,7 @@ const container = document.getElementById("containerExercise");
 const answer = document.getElementById("answer");
 const textToUser = document.getElementById("text");
 const tableResult = document.getElementById("tableResult").getElementsByTagName('tbody')[0];
+const textGrade = document.getElementById("grade");
 let numbers, type, exerciseToTable;
 let num1, num2;
 let result;
@@ -100,7 +101,6 @@ function getRandomInt(min, max) {
 }
 
 function check() {
-    count += 1;
     let newRow = tableResult.insertRow(0);
     let newCell1 = newRow.insertCell();
     let newCell2 = newRow.insertCell();
@@ -121,7 +121,11 @@ function check() {
     newCell1.textContent = exerciseToTable;
     newCell2.textContent = result;
     newCell4.textContent = grade;
-
+    count += 1;
+    if (count == 5) {
+        textGrade.innerText = `הציון שלך הוא: ${grade}`;
+        return;
+    }
     setTimeout(again, 1000);
 }
 

@@ -17,6 +17,8 @@ h1 {
     display: flex;
     flex-direction: column;
     width: 170px;
+    margin-right: 50px;
+    background-color: gray;
 }
 
 h3 {
@@ -40,15 +42,19 @@ h3 {
     margin-left: 0.5em;
 }
 
-#check,
-#text {
+#check {
     font-size: 5rem;
     margin-left: 0.5em;
 }
 
 #text {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 10vh;
+    font-size: 5rem;
 }
+
 
 #tableResult {
     margin: 30px auto;
@@ -67,4 +73,8 @@ td {
 
 th {
     color: white;
+}
+
+#grade {
+    font-size: 5rem;
 }
