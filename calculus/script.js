@@ -110,6 +110,7 @@ function check() {
         textToUser.innerText = "תשובה נכונה";
         textToUser.style.color = "green";
         grade += 5;
+        newCell4.textContent = 5;
         newCell3.textContent = '';
         newCell1.style.color = "green";
     } else {
@@ -117,12 +118,13 @@ function check() {
         textToUser.style.color = "red";
         newCell3.textContent = answer.value;
         newCell1.style.color = "red";
+        newCell4.textContent = 0;
     }
     newCell1.textContent = exerciseToTable;
     newCell2.textContent = result;
-    newCell4.textContent = grade;
+
     count += 1;
-    if (count == 5) {
+    if (count == 20) {
         textGrade.innerText = `הציון שלך הוא: ${grade}`;
         return;
     }
